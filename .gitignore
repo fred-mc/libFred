@@ -1,0 +1,9 @@
+syntax: glob
+*.o
+*.a
+*.so
+*~
+.DS_Store
+*.dSYM
+*.x
+out
