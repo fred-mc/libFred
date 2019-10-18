@@ -1,0 +1,3 @@
+License for Fred and libFred
+
+...
