@@ -18,7 +18,7 @@ fredRedirectError("cout","out/fred.err");
 
 
 // Fred Library initialization
-fredInit();
+fredInit("./");
 // set number of POSIX threads for parallel execution (default = 1, i.e. serial execution)
 fredSetPThreads(12);
 // cout<<fredGetPThreads()<<endl;
@@ -104,4 +104,4 @@ fredScorer_save(iphantom,iScorer,"out/myscorer");
 // end of then game
 cout<<"Aufwiedersehen!"<<endl;
 return 0;
-}
+}}}}
