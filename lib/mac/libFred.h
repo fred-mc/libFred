@@ -21,6 +21,10 @@ extern "C" {
 #define FRED_GENERIC_ERROR_4                      -4
 
 
+#define FRED_FILE_NOT_FOUND                       -10
+#define FRED_IO_ERROR                             -11
+
+
 #define FRED_ILLDEFINED_VECTOR                    -50
 #define FRED_ILLDEFINED_DIMENSIONS                -51
 
@@ -64,7 +68,7 @@ typedef PhaseSpace_xvT_s PhaseSpace_xvT;
 
 /* Library API */
 
-int fredInit();
+int fredInit(const char* datadir/* path to directory containing data repository libFred.data */);
 int fredGetPThreads(); /* returns number of maximum POSIX threads for parallel execution */
 int fredSetPThreads(int numThreads); /* set number of maximum POSIX threads for parallel execution */
 
@@ -113,6 +117,10 @@ int fredGetRegion_material(int ireg /* region index */);
 int fredSetRegion_material(int ireg /* region index */,
                          int imat /* material index */);
 
+int fredLoadRegion_CTscan(int ireg /* region index */,
+                         const char *fpath /* path to a file containing a 3D map in HU */);
+
+
 /* Scorer API */
 enum regionScorer {trackScorer,eDepScorer,doseScorer,LETdScorer,countsScorer};
 
@@ -130,6 +138,11 @@ int fredScorer_save(int ireg /* region index */,
                     int iscorer /* scorer index ... */,
                     const char *fpath /* file path */);
 
+float* fredScorer_buffer(int ireg /* region index */,
+                    int iscorer /* scorer index ... */,
+                    int nn[3] /* dimensions */,
+          int ierr /* error code */);
+          /* returns a buffer filled with scorer values; user is responsible for deallocation of the pointed memory */ 
 
 /* Material API */
 int fred_NumMaterials(); /* return number of defined materials */

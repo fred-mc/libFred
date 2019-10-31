@@ -6,3 +6,4 @@ syntax: glob
 *.dSYM
 *.x
 out
+testAS
