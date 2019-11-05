@@ -104,4 +104,4 @@ fredScorer_save(iphantom,iScorer,"out/myscorer");
 // end of then game
 cout<<"Aufwiedersehen!"<<endl;
 return 0;
-}
+}}}}
