@@ -17,6 +17,13 @@ Fred is available as dynamic library (*libFred.so*) which can be called from oth
 
 4. Run *python example1.py*.
 
+## Notes on FredUtilities.py
+* This is an initial idea how to provide a higher level python library.
+* Rationale: For a python user, it is much more intuitive to work with objects. For example, a region would be an object with attributes such as offset, origin etc.
+* Methods call the FredAPI, e.g. to get the regions index, offset and so on.
+* This also allows us to implement beams as classes. The current *FredUtilities.py* contains an example of a pencil beam class which is used by *example2.py*. One can either implement a fancy pencil beam model inside the class with a lot of options or let the user define a function which generates rays and pass the function (which is an object in python) to the class. To be discussed. 
+
+
 ## Notes and known issues
 * So far, the module is linked in place, so that *import FredAPI* only works from within the directory where the python library is stored. This will be modified in the future to install the module in a standard location.
 * The compilation using the setup.py file might complain about wrong deployment target on MacOS. As a workaround, type *export MACOSX_DEPLOYMENT_TARGET=10.14* (or whatever MacOS version you are using) before running *python setup.py*.
