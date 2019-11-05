@@ -18,7 +18,7 @@ fredRedirectError("cout","out/fred.err");
 
 
 // Fred Library initialization
-fredInit();
+if(fredInit(".")) return -1;
 // set number of POSIX threads for parallel execution (default = 1, i.e. serial execution)
 fredSetPThreads(12);
 // cout<<fredGetPThreads()<<endl;

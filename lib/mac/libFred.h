@@ -148,6 +148,8 @@ float* fredScorer_buffer(int ireg /* region index */,
 int fred_NumMaterials(); /* return number of defined materials */
 int fredMaterial_index(const char *matID); /* return index of material for given ID; returns -1 if matID is not defined*/
 int fredMaterial_info(int imat ); /* print info on material with given index*/
+
+// TO BE IMPLEMENTED
 int fredAddMaterial(const char *matID); /* add new material with name matID; returns index of new material or -1 if error*/
 
 // /* Phantom API */
