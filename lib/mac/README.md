@@ -4,14 +4,14 @@ Fred is available as dynamic library (*libFred.so*) which can be called from oth
 # Python wrapper
 * We have begun implementing a python wrapper of the Fred library. It is intended to call the Fred library functions from python.
 * All *int* functions which return error codes are wrapped into *void* functions which do not return anything in python, but rather raise a python exception informing the user about the error.
-* Array type inputs are wrapped as numpy arrays, but also lists are acceptable in most cases. The *numpy.i* file contains the necessary typemaps - it is part of every numpy distribution. Checks of correct input size are rudimentary for now, but this will improve in the future.
+* Array type inputs are wrapped as numpy arrays, but also lists are acceptable in most cases. The *numpy.i* file contains the necessary typemaps - it is provided as part of every numpy distribution. Checks of correct input size are rudimentary for now, but this will improve in the future.
 * The library is imported in python by *import FredAPI* and functions are then available as *FredAPI.foo()*.
 
 ## Compile instructions for Fred python wrapper
 
 1. All the following steps are performed within the lib/mac directory.
 
-2. , run *swig -c++ -python libFred.i*. This will generate the wrapper code contained in libFred_wrap.cpp.
+2. Run *swig -c++ -python libFred.i*. This will generate the wrapper code contained in libFred_wrap.cpp.
 
 3. Run *python setup.py build_ext --inplace*. This will compile the wrapper code and link it to the Fred library (libFred.so). It generates \_FredAPI.so, which is the dynamic python library.
 
