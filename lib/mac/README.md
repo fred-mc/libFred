@@ -1,7 +1,7 @@
 # Fred library
 Fred is available as dynamic library (*libFred.so*) which can be called from other codes. The data needed by the physics models in bundled into the binary file *libFred.data*.  
 
-# Python wrapper
+# Python wrapper: FredAPI
 * We have begun implementing a python wrapper of the Fred library. It is intended to call the Fred library functions from python.
 * All *int* functions which return error codes are wrapped into *void* functions which do not return anything in python, but rather raise a python exception informing the user about the error.
 * Array type inputs are wrapped as numpy arrays, but also lists are acceptable in most cases. The *numpy.i* file contains the necessary typemaps - it is provided as part of every numpy distribution. Checks of correct input size are rudimentary for now, but this will improve in the future.
@@ -17,11 +17,12 @@ Fred is available as dynamic library (*libFred.so*) which can be called from oth
 
 4. Run *python example1.py*.
 
-## Notes on FredUtilities.py
-* This is an initial idea how to provide a higher level python library.
+## User interface: FredUI.py
+* This is an initial idea how to provide a higher level user interface written in python directly.
 * Rationale: For a python user, it is much more intuitive to work with objects. For example, a region would be an object with attributes such as offset, origin etc.
 * Methods call the FredAPI, e.g. to get the regions index, offset and so on.
-* This also allows us to implement beams as classes. The current *FredUtilities.py* contains an example of a pencil beam class which is used by *example2.py*. One can either implement a fancy pencil beam model inside the class with a lot of options or let the user define a function which generates rays and pass the function (which is an object in python) to the class. To be discussed. 
+* This also allows us to implement beams as classes. The current *FredUI.py* contains an example of a pencil beam class. One can either implement a fancy pencil beam model inside the class with a lot of options or let the user define a function which generates rays and pass the function (which is an object in python) to the class. To be discussed.
+* To try the FredUI.py, look at and run *example2.py*.
 
 
 ## Notes and known issues
