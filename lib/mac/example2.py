@@ -13,7 +13,7 @@ def ensure_dir(dirname):
 FredAPI.Init("./")
 
 PThreads = FredAPI.GetPThreads()
-print("Found {0:d} avaiable posix threads.".format(PThreads))
+print("Found {0:d} available posix threads.".format(PThreads))
 
 FredAPI.SetPThreads(1)
 FredAPI.RedirectOutput("cout", "out/FredAPI.out")
