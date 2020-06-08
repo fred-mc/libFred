@@ -1,3 +1,6 @@
+**OBSOLETE !!**
+
+
 # Fred library
 Fred is available as dynamic library (*libFred.so*) which can be called from other codes. The data needed by the physics models in bundled into the binary file *libFred.data*.  
 
