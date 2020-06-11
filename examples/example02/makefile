@@ -26,4 +26,3 @@ EXE=$(notdir $(PWD) ).x
 default:
 	$(CCC) main.cpp -I$(LIBFREDDIR) -L$(LIBFREDDIR) -lFred -o $(EXE)
 
-
