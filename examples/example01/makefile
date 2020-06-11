@@ -17,10 +17,10 @@ CC=clang
 CCVERSION = $(shell clang --version | grep ^Target | awk '{print $$2}' | sed 's/^.*darwin//')
 PLATFORM=mac
 endif
-LIBDIR=../../lib/$(PLATFORM)
-LIBINC=../../lib/$(PLATFORM)
+#==================================================#
+LIBFREDDIR=$(abspath ../../lib/$(PLATFORM))
 #==================================================#
 
 default:
-	$(CCC) main.cpp -I$(LIBINC) -L$(LIBDIR) -lFred -o example01.x
+	$(CCC) main.cpp -I$(LIBFREDDIR) -L$(LIBFREDDIR) -lFred -o example01.x
 

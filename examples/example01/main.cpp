@@ -17,11 +17,15 @@ fredRedirectOutput("cout","fred.out");
 fredRedirectError("cout","fred.err");
 
 
+// check that env var LIBFREDDIR is set
+if(getenv("LIBFREDDIR")==nullptr) {cerr<<"Error: LIBFREDDIR is not set"<<endl;exit(1);}
+
 // Fred Library initialization
-fredInit();
+if(fredInit(getenv("LIBFREDDIR"))) return -1;
 // set number of POSIX threads for parallel execution (default = 1, i.e. serial execution)
 fredSetPThreads(12);
 // cout<<fredGetPThreads()<<endl;
+// exit(0);
 
 
 
@@ -77,9 +81,9 @@ for(int ir=0;ir<rays.size();ir++){
 }
 
 // check that primary particles are well defined 
-if(fredCheckRays("proton",rays.size(),rays.data())==0){
+if(fredCheckRays(PROTON_ID,rays.size(),rays.data())==0){
 	// OK: add particles to the tracking stack
-	fredAddRays("proton",rays.size(),rays.data());
+	fredAddRays(PROTON_ID,rays.size(),rays.data());
 }
 
 
@@ -97,7 +101,8 @@ cout<<"num rays to track: "<<fredGetNumRays()<<endl;
 fredTrackRays(0,-1); // 0 : -1 = all particles
 //fredTrackRays(5,13); // 5 : 13 = particles from 5 to 13 inclusive
 
-
+// evaluate the scorer
+fredScorer_evaluate(iphantom,iScorer);
 // save scorer map to file
 fredScorer_save(iphantom,iScorer,"myscorer");
 

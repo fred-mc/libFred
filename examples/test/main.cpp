@@ -16,7 +16,6 @@ cout<<"Hello from libFred"<<endl;
 fredRedirectOutput("cout","out/fred.out");
 fredRedirectError("cout","out/fred.err");
 
-
 // Fred Library initialization
 if(fredInit(".")) return -1;
 // set number of POSIX threads for parallel execution (default = 1, i.e. serial execution)
@@ -77,9 +76,9 @@ for(int ir=0;ir<rays.size();ir++){
 }
 
 // check that primary particles are well defined 
-if(fredCheckRays("proton",rays.size(),rays.data())==0){
+if(fredCheckRays(PROTON_ID,rays.size(),rays.data())==0){
 	// OK: add particles to the tracking stack
-	fredAddRays("proton",rays.size(),rays.data());
+	fredAddRays(PROTON_ID,rays.size(),rays.data());
 }
 
 

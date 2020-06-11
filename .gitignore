@@ -10,3 +10,7 @@ testAS
 *.pyc
 
 build
+
+
+*/example??
+*/test

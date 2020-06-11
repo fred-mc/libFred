@@ -45,6 +45,9 @@ extern "C" {
 
 #define FRED_REGION_NOT_FOUND                     -100
 #define FRED_REGION_ALREADY_DEFINED               -101
+#define FRED_REGION_PARENT_ALREADY_SET            -102
+#define FRED_REGION_TOO_MANY_CHILDREN             -103
+
 
 #define FRED_MATERIAL_NOT_FOUND                   -200
 
@@ -55,6 +58,11 @@ extern "C" {
 #define FRED_PARTICLE_CODE_NOT_FOUND              -400
 
 #define FRED_BEAM_NOT_FOUND                       -500
+
+#define FRED_GEOMETRY_NOT_FOUND                   -600
+#define FRED_GEOMETRY_NOT_VALID                   -601
+#define FRED_GEOMETRY_OVERLAPPING_REGIONS         -602
+
 
 #define FRED_SETUP_IS_CLOSED                      -1000
 
@@ -211,6 +219,20 @@ int fredLoadRegion_CTscan(int ireg /* region index */,
                          const char *fpath /* path to a file containing a 3D map in HU */);
 
 
+int fredGetRegion_active(int ireg /* region index */);
+/* returns 1=active 0=inactive  (or a negative error code) */
+
+int fredSetRegion_active(int ireg /* region index */,
+                         int onoff /* active = on/off (1/0)  */);
+
+
+int fredGetRegion_parent(int ireg /* region index */);
+
+
+int fredSetRegion_parent(int ireg /* region index */,
+                      int iparent /* parent region index  */);
+
+
 /* Scorer API */
 enum regionScorer {trackScorer,eDepScorer,doseScorer,LETdScorer,countsScorer};
 
@@ -240,6 +262,14 @@ int fredMaterial_info(int imat ); /* print info on material with given index*/
 
 // TO BE IMPLEMENTED
 int fredAddMaterial(const char *matID); /* add new material with name matID; returns index of new material or -1 if error*/
+
+/* Geometry API */
+int fredAddGeometry(); /* validate current geometry and add it to the list of available geometries
+  if successful, returns the index of added geometry */
+
+int fredSetGeometry(int igeom /* set given geometry as the current geometry */);
+int fredGetGeometry(int igeom /* return the index of current geometry */);
+
 
 // /* Phantom API */
 // int 
@@ -274,11 +304,14 @@ int fredAddMaterial(const char *matID); /* add new material with name matID; ret
 int
 fredAddBeam();
 
+int
+fredCloneBeam(int ibeam /* beam index to be cloned */
+  /* returns index of newly created beam */);
+
 //int fredDeleteBeam(int ibeam /* beam index */); <-- discontinued
 
 int
 fred_NumBeams(); /* return number of defined beams*/ 
-
 
 int
 fredSetBeam_FoR(int ibeam /* beam index */,
@@ -312,7 +345,17 @@ fredGetBeam_particle(int ibeam /* beam index */,
                      int *particleID /* returns here the particle ID */);
 
 int
-fredGetBeam_numRays(int ibeam /* beam index */);
+fredGetBeam_numRays(int ibeam /* beam index */); /* return number of rays assigned to this beam */
+
+int
+fredSetBeam_numRays(int ibeam /* beam index */,
+                    int nrays /* number of rays */);
+
+int
+fredEnqueueBeam(int ibeam /* beam index */,
+                int igeom /* geometry index */,
+                int iscoring /* scoring index */);
+/* enqueue beam in the given geometry for subsequent delivery; on success, returns queue index*/
 
 
 /* Ray API */
@@ -327,10 +370,18 @@ fredAddRays(int particleID /* particle ID (see begin of header file) */,
             PhaseSpace_xvT *rays /* array of rays */);
 
 int
-fredAddRaysToBeam(int particleID /* particle ID (see begin of header file) */,
+fredAddBeam_rays(int ibeam /* beam index */,
+            int particleID /* particle ID (see begin of header file) */,
             int nrays /* number of rays to add */,
-            PhaseSpace_xvT *rays /* array of rays */,
-            int ibeam /* beam for this batch of rays*/);
+            PhaseSpace_xvT *rays /* array of rays */
+            );
+
+int
+fredSetBeam_rays(int ibeam /* beam index */,
+            int particleID /* particle ID (see begin of header file) */,
+            int nrays /* number of rays to add */,
+            PhaseSpace_xvT *rays /* array of rays */
+            );
 
 int
 fredGetNumRays();
@@ -363,9 +414,11 @@ fredPluginObtainBuffer(int BufferID /* buffer ID to be shared with plugin */ ,
                       size_t *count/* num of elements in buffer*/,
                       size_t *size /* element size in Bytes */ );
 
+
 /* Control API */
-int
-fredCloseSetup();
+int fredCloseSetup();
+
+
 
 int fredActivateEloss(int onoff /* set on/off (1/0)  the energy loss module dEdx*/);
 int fredActivateFluc(int onoff /* set on/off (1/0) the energy straggling module */);
@@ -382,6 +435,12 @@ int
 fredTrackBeams(int ibeammin /* minimum beam index: 0 is the first created beam  */,
                int ibeammax /* maximum beam index (inclusive): if -1 then from ibeammin to end */ );
                 /* track all rays belonging to given beams */
+
+int
+fredTracking(int iqueuemin /* minimum queue index */,
+             int iqueuemax /* maximum queue index (inclusive): if -1 then from iqueuemin to end */ );
+                /* track all rays belonging to given queue range  */
+
 
 
 #ifdef __cplusplus
